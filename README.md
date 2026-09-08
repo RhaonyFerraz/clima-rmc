@@ -3,10 +3,11 @@
 [![Node.js](https://img.shields.io/badge/Node.js-20.x%20%7C%2022.x-green.svg)](https://nodejs.org/)
 [![Express](https://img.shields.io/badge/Express-4.21-lightgrey.svg)](https://expressjs.com/)
 [![SQLite](https://img.shields.io/badge/Database-SQLite3-blue.svg)](https://sqlite.org/)
+[![PWA Ready](https://img.shields.io/badge/PWA-Mobile%20%26%20Offline-orange.svg)](https://web.dev/progressive-web-apps/)
 [![Acessibilidade](https://img.shields.io/badge/Acessibilidade-WCAG%202.1%20AA-purple.svg)](https://www.w3.org/WAI/standards-guidelines/wcag/)
 [![Licença](https://img.shields.io/badge/Licença-MIT-brightgreen.svg)](LICENSE)
 
-Sistema web completo para monitoramento em tempo real, persistência histórica, alertas preventivos e análise estatística de dados climáticos e qualidade do ar para as cidades de **Campinas**, **Sumaré** e **Hortolândia** (Região Metropolitana de Campinas - SP).
+Sistema web completo para monitoramento em tempo real, persistência histórica, alertas preventivos e análise estatística de dados climáticos e qualidade do ar para as cidades de **Campinas**, **Sumaré** e **Hortolândia** (Região Metropolitana de Campinas - SP), totalmente compatível com **Progressive Web App (PWA)** para instalação em celulares e computadores.
 
 ---
 
@@ -18,13 +19,14 @@ Este software foi estruturado para cumprir com rigor todos os critérios avaliat
 | :--- | :--- |
 | **1. Framework Web** | [src/app.js](file:///c:/Users/Micro/Desktop/clima_rmc/src/app.js) e [src/routes/api.js](file:///c:/Users/Micro/Desktop/clima_rmc/src/routes/api.js) — **Express.js (Node.js)** com arquitetura RESTful modular e tratamento global de erros. |
 | **2. Banco de Dados** | [src/config/database.js](file:///c:/Users/Micro/Desktop/clima_rmc/src/config/database.js) — **SQLite3** com tabelas relacionais (`cities`, `weather_readings`, `air_quality_readings`, `system_alerts`), índices de performance e persistência local/nuvem. |
-| **3. Script Web (JavaScript)** | [public/js/app.js](file:///c:/Users/Micro/Desktop/clima_rmc/public/js/app.js), [public/js/charts.js](file:///c:/Users/Micro/Desktop/clima_rmc/public/js/charts.js), [public/js/accessibility.js](file:///c:/Users/Micro/Desktop/clima_rmc/public/js/accessibility.js) — JavaScript ES6+ no navegador com **Chart.js** dinâmico e consumo assíncrono via `fetch`. |
+| **3. Script Web (JavaScript)** | [public/js/app.js](file:///c:/Users/Micro/Desktop/clima_rmc/public/js/app.js), [public/js/charts.js](file:///c:/Users/Micro/Desktop/clima_rmc/public/js/charts.js), [public/js/pwa.js](file:///c:/Users/Micro/Desktop/clima_rmc/public/js/pwa.js) — JavaScript ES6+ no navegador com **Chart.js** dinâmico, Service Worker e consumo assíncrono via `fetch`. |
 | **4. Nuvem (Cloud)** | [Dockerfile](file:///c:/Users/Micro/Desktop/clima_rmc/Dockerfile), [docker-compose.yml](file:///c:/Users/Micro/Desktop/clima_rmc/docker-compose.yml) e [.github/workflows/ci.yml](file:///c:/Users/Micro/Desktop/clima_rmc/.github/workflows/ci.yml) — Container pronto para Render, Railway, AWS ou Google Cloud Run com pipeline de CI/CD automatizado no GitHub Actions. |
 | **5. Uso de API** | [src/services/weatherService.js](file:///c:/Users/Micro/Desktop/clima_rmc/src/services/weatherService.js) — Integração com **Open-Meteo Weather & Air Quality API** (dados em tempo real sem custos) + adaptador pronto para **Google Weather / WeatherNext API**. |
-| **6. Acessibilidade** | [public/index.html](file:///c:/Users/Micro/Desktop/clima_rmc/public/index.html) e [public/js/accessibility.js](file:///c:/Users/Micro/Desktop/clima_rmc/public/js/accessibility.js) — Conformidade **WCAG 2.1 AA**: Modo alto contraste (amarelo e preto > 7:1), redimensionador de fonte (A-, A, A+), tags semânticas HTML5, skip-link e região `aria-live` para leitores de tela (NVDA/TalkBack). |
+| **6. Acessibilidade** | [public/index.html](file:///c:/Users/Micro/Desktop/clima_rmc/public/index.html) e [public/js/accessibility.js](file:///c:/Users/Micro/Desktop/clima_rmc/public/js/accessibility.js) — Conformidade **WCAG 2.1 AA**: Tags semânticas HTML5, skip-link, alto contraste por padrão e região `aria-live` para leitores de tela (NVDA/TalkBack). |
 | **7. Controle de Versão** | Repositório Git estruturado, commits semânticos (*Conventional Commits*) e arquivo [.gitignore](file:///c:/Users/Micro/Desktop/clima_rmc/.gitignore) configurado. |
-| **8. Testes Automatizados** | [tests/aqi.test.js](file:///c:/Users/Micro/Desktop/clima_rmc/tests/aqi.test.js) e [tests/api.test.js](file:///c:/Users/Micro/Desktop/clima_rmc/tests/api.test.js) — Testes unitários e de integração com **Jest** e **Supertest**. |
+| **8. Testes Automatizados** | [tests/aqi.test.js](file:///c:/Users/Micro/Desktop/clima_rmc/tests/aqi.test.js) e [tests/api.test.js](file:///c:/Users/Micro/Desktop/clima_rmc/tests/api.test.js) — **22 testes** unitários e de integração com **Jest** e **Supertest**. |
 | **9. Análise de Dados** | [src/controllers/analysisController.js](file:///c:/Users/Micro/Desktop/clima_rmc/src/controllers/analysisController.js) — Estatísticas descritivas (médias, min, max), cálculo do **IQAr CONAMA 491/2018**, correlação de Pearson entre umidade e poluição (PM2.5) e exportação em **CSV** e **JSON**. |
+| **⭐ Diferencial PWA** | [public/manifest.json](file:///c:/Users/Micro/Desktop/clima_rmc/public/manifest.json) e [public/sw.js](file:///c:/Users/Micro/Desktop/clima_rmc/public/sw.js) — Aplicativo instalável em celulares/computadores, suporte offline completo e atalhos rápidos de tela inicial. |
 
 ---
 
