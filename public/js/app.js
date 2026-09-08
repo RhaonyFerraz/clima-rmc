@@ -126,6 +126,11 @@
 
       if (json.success && json.data) {
         renderCityDashboard(json.data);
+
+        // Atualiza o Dashboard Histórico para a cidade selecionada
+        if (window.ClimaHistory) {
+          window.ClimaHistory.loadCity(cityId);
+        }
       }
     } catch (err) {
       console.error(`Erro ao carregar dados de ${cityId}:`, err);
@@ -142,27 +147,61 @@
     const cityNameEls = document.querySelectorAll('.dynamic-city-name');
     cityNameEls.forEach(el => el.textContent = city.name);
 
+    function safeSetText(id, text) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    }
+
     // 1. Alertas Ativos
     renderAlerts(alerts, city.name);
 
     // 2. Card de Clima
-    document.getElementById('weather-temp').textContent = Math.round(weather.temperature);
-    document.getElementById('weather-apparent').textContent = `${weather.apparentTemperature?.toFixed(1)}°C`;
-    document.getElementById('weather-condition').textContent = weather.condition;
-    document.getElementById('weather-icon').textContent = weather.icon;
-    document.getElementById('weather-humidity').textContent = `${weather.humidity}%`;
-    document.getElementById('weather-wind').textContent = `${weather.windSpeed} km/h`;
-    document.getElementById('weather-pressure').textContent = `${weather.surfacePressure} hPa`;
-    document.getElementById('weather-precip').textContent = `${weather.precipitation} mm`;
+    safeSetText('weather-temp', (weather.temperature !== undefined && weather.temperature !== null) ? Math.round(weather.temperature) : '--');
+    safeSetText('weather-apparent', (weather.apparentTemperature !== undefined && weather.apparentTemperature !== null) ? `${weather.apparentTemperature.toFixed(1)}°C` : '--°C');
+    safeSetText('weather-condition', weather.condition || 'Estável');
+    safeSetText('weather-icon', weather.icon || '🌤️');
+    safeSetText('weather-humidity', (weather.humidity !== undefined && weather.humidity !== null) ? `${weather.humidity}%` : '--%');
+    safeSetText('weather-wind', (weather.windSpeed !== undefined && weather.windSpeed !== null) ? `${weather.windSpeed} km/h` : '-- km/h');
+    safeSetText('weather-gusts', (weather.windGusts !== undefined && weather.windGusts !== null) ? `${weather.windGusts} km/h` : '-- km/h');
+    safeSetText('weather-pressure', (weather.surfacePressure !== undefined && weather.surfacePressure !== null) ? `${weather.surfacePressure} hPa` : '-- hPa');
+    safeSetText('weather-precip', (weather.precipitation !== undefined && weather.precipitation !== null) ? `${weather.precipitation} mm` : '0 mm');
+
+    // 2a. Widget de Índice UV
+    if (weather.uvInfo) {
+      safeSetText('uv-icon', weather.uvInfo.icon || '🟢');
+      safeSetText('uv-index', weather.uvIndex !== undefined ? weather.uvIndex.toFixed(1) : '--');
+      const uvLevelEl = document.getElementById('uv-level');
+      if (uvLevelEl) {
+        uvLevelEl.textContent = weather.uvInfo.level || '--';
+        uvLevelEl.style.background = weather.uvInfo.color || '#10b981';
+      }
+      safeSetText('uv-tip-text', weather.uvInfo.tip || '');
+    }
+
+    // 2b. Bússola de vento — rotaciona a seta conforme graus
+    if (weather.windDirection !== undefined && weather.windDirection !== null) {
+      const arrowEl = document.getElementById('wind-arrow');
+      if (arrowEl) {
+        arrowEl.style.transform = `translate(-50%, -50%) rotate(${weather.windDirection}deg)`;
+        arrowEl.title = `${weather.windDirection}° — ${weather.windCardinal?.label || ''}`;
+      }
+      const cardinal = weather.windCardinal;
+      if (cardinal) {
+        safeSetText('weather-wind-cardinal', `${cardinal.abbr} — ${cardinal.label}`);
+      }
+    }
 
     // 3. Card de Qualidade do Ar
     const aqiScoreEl = document.getElementById('aqi-score');
     const aqiPillEl = document.getElementById('aqi-status-pill');
-    aqiScoreEl.textContent = airQuality.iqarConama;
-    aqiScoreEl.style.color = airQuality.color;
-
-    aqiPillEl.textContent = airQuality.category;
-    aqiPillEl.style.backgroundColor = airQuality.color;
+    if (aqiScoreEl) {
+      aqiScoreEl.textContent = airQuality.iqarConama ?? 30;
+      aqiScoreEl.style.color = airQuality.color || '#10b981';
+    }
+    if (aqiPillEl) {
+      aqiPillEl.textContent = airQuality.category || 'Boa';
+      aqiPillEl.style.backgroundColor = airQuality.color || '#10b981';
+    }
 
     // Atualiza ponteiro visual da barra de risco CONAMA
     const pointerEl = document.getElementById('aqi-meter-pointer');
@@ -183,19 +222,19 @@
       pointerEl.style.left = `${Math.max(2, Math.min(98, percentage))}%`;
     }
 
-    document.getElementById('aqi-recommendation-text').textContent = airQuality.recommendation;
-    document.getElementById('val-pm25').textContent = `${airQuality.pm2_5 ?? '--'} µg/m³`;
-    document.getElementById('val-pm10').textContent = `${airQuality.pm10 ?? '--'} µg/m³`;
-    document.getElementById('val-ozone').textContent = `${airQuality.ozone ?? '--'} µg/m³`;
-    document.getElementById('val-no2').textContent = `${airQuality.nitrogenDioxide ?? '--'} µg/m³`;
-    document.getElementById('val-so2').textContent = `${airQuality.sulphurDioxide ?? '--'} µg/m³`;
-    document.getElementById('val-co').textContent = `${airQuality.carbonMonoxide ?? '--'} µg/m³`;
+    safeSetText('aqi-recommendation-text', airQuality.recommendation || 'Condições favoráveis para atividades rotineiras ao ar livre.');
+    safeSetText('val-pm25', (airQuality.pm2_5 !== undefined && airQuality.pm2_5 !== null) ? `${airQuality.pm2_5} µg/m³` : '--');
+    safeSetText('val-pm10', (airQuality.pm10 !== undefined && airQuality.pm10 !== null) ? `${airQuality.pm10} µg/m³` : '--');
+    safeSetText('val-ozone', (airQuality.ozone !== undefined && airQuality.ozone !== null) ? `${airQuality.ozone} µg/m³` : '--');
+    safeSetText('val-no2', (airQuality.nitrogenDioxide !== undefined && airQuality.nitrogenDioxide !== null) ? `${airQuality.nitrogenDioxide} µg/m³` : '--');
+    safeSetText('val-so2', (airQuality.sulphurDioxide !== undefined && airQuality.sulphurDioxide !== null) ? `${airQuality.sulphurDioxide} µg/m³` : '--');
+    safeSetText('val-co', (airQuality.carbonMonoxide !== undefined && airQuality.carbonMonoxide !== null) ? `${airQuality.carbonMonoxide} µg/m³` : '--');
 
     // 4. Card de Informações da Cidade
-    document.getElementById('city-description').textContent = city.description;
-    document.getElementById('city-population').textContent = city.population ? city.population.toLocaleString('pt-BR') : '--';
-    document.getElementById('city-elevation').textContent = `${city.elevation}m`;
-    document.getElementById('city-coords').textContent = `${city.latitude}, ${city.longitude}`;
+    safeSetText('city-description', city.description || '');
+    safeSetText('city-population', city.population ? city.population.toLocaleString('pt-BR') : '--');
+    safeSetText('city-elevation', city.elevation ? `${city.elevation}m` : '--');
+    safeSetText('city-coords', (city.latitude && city.longitude) ? `${city.latitude}, ${city.longitude}` : '--');
 
     // 5. Gráficos específicos da cidade
     if (window.ClimaCharts) {

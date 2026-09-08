@@ -124,12 +124,54 @@
             <div id="weather-humidity" class="detail-value">--%</div>
           </div>
           <div class="detail-item">
-            <div class="detail-label">Vento Médio</div>
-            <div id="weather-wind" class="detail-value">-- km/h</div>
+            <div class="detail-label">Pressão Atmosférica</div>
+            <div id="weather-pressure" class="detail-value">-- hPa</div>
           </div>
           <div class="detail-item">
-            <div class="detail-label">Pressão</div>
-            <div id="weather-pressure" class="detail-value">-- hPa</div>
+            <div class="detail-label">Precipitação Atual</div>
+            <div id="weather-precip" class="detail-value">0 mm</div>
+          </div>
+        </div>
+
+        <!-- Widget do Índice UV -->
+        <div class="uv-widget" aria-label="Índice Ultravioleta">
+          <div class="uv-widget-left">
+            <div class="uv-label">Radiacião UV</div>
+            <div class="uv-value-row">
+              <span id="uv-icon" class="uv-icon" aria-hidden="true">🟢</span>
+              <span id="uv-index" class="uv-index">--</span>
+              <span id="uv-level" class="uv-level-badge">--</span>
+            </div>
+          </div>
+          <div class="uv-tip">
+            <p id="uv-tip-text">Carregando classificação UV...</p>
+          </div>
+        </div>
+
+        <!-- Bússola e Vento -->
+        <div class="wind-compass-widget" aria-label="Direção e velocidade do vento">
+          <div class="compass-container">
+            <div class="compass-rose" aria-hidden="true">
+              <span class="compass-n">N</span>
+              <span class="compass-s">S</span>
+              <span class="compass-l">L</span>
+              <span class="compass-o">O</span>
+              <div id="wind-arrow" class="wind-arrow">↑</div>
+            </div>
+          </div>
+          <div class="wind-info">
+            <div class="wind-info-row">
+              <div class="wind-info-label">Vento</div>
+              <div id="weather-wind" class="wind-info-value">-- km/h</div>
+            </div>
+            <div class="wind-info-row">
+              <div class="wind-info-label">Rajadas</div>
+              <div id="weather-gusts" class="wind-info-value">-- km/h</div>
+            </div>
+            <div class="wind-info-row">
+              <div class="wind-info-label">Direção</div>
+              <div id="weather-wind-cardinal" class="wind-info-value" style="font-size:0.85rem">--</div>
+            </div>
           </div>
         </div>
       </article>
@@ -302,6 +344,95 @@
       </div>
     </section>
 
+    <!-- ======================================================== -->
+    <!-- Seção: Dashboard Histórico SQLite ======================== -->
+    <!-- ======================================================== -->
+    <section class="history-section" aria-labelledby="history-heading">
+      <div class="section-header">
+        <div>
+          <h2 id="history-heading" class="section-title">🗂️ Dashboard Histórico do Banco de Dados</h2>
+          <div style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 2px;">
+            Séries temporais extraídas do SQLite local — demonstração de persistência e análise de dados ao longo do tempo.
+          </div>
+        </div>
+        <!-- Seletor de período -->
+        <div class="hist-period-selector" role="group" aria-label="Selecionar período de histórico">
+          <button class="hist-period-btn active" data-hours="24" aria-pressed="true">Últimas 24h</button>
+          <button class="hist-period-btn" data-hours="168" aria-pressed="false">7 dias</button>
+          <button class="hist-period-btn" data-hours="720" aria-pressed="false">30 dias</button>
+        </div>
+      </div>
+
+      <!-- Resumo Estatístico do Período -->
+      <div class="hist-stats-row">
+        <div class="hist-stat-card">
+          <div class="hist-stat-label">📦 Leituras no Período</div>
+          <div id="hist-stat-count" class="hist-stat-value">--</div>
+          <div id="hist-stat-period" class="hist-stat-sub">--</div>
+        </div>
+        <div class="hist-stat-card">
+          <div class="hist-stat-label">🌡️ Temperatura Média</div>
+          <div id="hist-stat-temp-avg" class="hist-stat-value">--</div>
+          <div id="hist-stat-temp-range" class="hist-stat-sub">min ~ max</div>
+        </div>
+        <div class="hist-stat-card">
+          <div class="hist-stat-label">💧 Umidade Média</div>
+          <div id="hist-stat-hum-avg" class="hist-stat-value">--</div>
+        </div>
+        <div class="hist-stat-card">
+          <div class="hist-stat-label">🍃 IQAr Médio CONAMA</div>
+          <div id="hist-stat-iqar-avg" class="hist-stat-value">--</div>
+        </div>
+      </div>
+
+      <!-- Estado de carregamento -->
+      <div id="history-loading" class="hist-loading" style="display: none;" aria-live="polite">
+        <div class="hist-spinner"></div>
+        <span>Consultando banco de dados SQLite...</span>
+      </div>
+
+      <!-- Estado vazio -->
+      <div id="history-empty" class="hist-empty" style="display: none;">
+        <span aria-hidden="true">🗄️</span>
+        <strong>Sem dados históricos ainda</strong>
+        <p>O banco SQLite ainda não possui registros suficientes para este período.<br>
+          Clique em <strong>Atualizar</strong> para sincronizar e aguarde algumas leituras serem gravadas.</p>
+      </div>
+
+      <!-- Gráficos históricos -->
+      <div id="history-content" class="hist-charts-grid">
+        <!-- Gráfico A: Temperatura + Umidade -->
+        <div class="chart-card" style="grid-column: 1 / -1;">
+          <h3 class="card-title" style="margin-bottom: 12px; font-size: 1rem;">
+            🌡️ Temperatura e Umidade Histórica — <span class="dynamic-city-name">Campinas</span>
+          </h3>
+          <div class="chart-wrapper" style="height: 240px;">
+            <canvas id="chart-history-temp" aria-label="Gráfico histórico de temperatura e umidade" role="img"></canvas>
+          </div>
+        </div>
+
+        <!-- Gráfico B: IQAr CONAMA -->
+        <div class="chart-card">
+          <h3 class="card-title" style="margin-bottom: 12px; font-size: 1rem;">
+            🍃 Evolução do IQAr CONAMA
+          </h3>
+          <div class="chart-wrapper" style="height: 220px;">
+            <canvas id="chart-history-aqi" aria-label="Gráfico histórico do índice de qualidade do ar CONAMA" role="img"></canvas>
+          </div>
+        </div>
+
+        <!-- Gráfico C: PM2.5 e PM10 -->
+        <div class="chart-card">
+          <h3 class="card-title" style="margin-bottom: 12px; font-size: 1rem;">
+            🌫️ Histórico de Partículas PM2.5 e PM10
+          </h3>
+          <div class="chart-wrapper" style="height: 220px;">
+            <canvas id="chart-history-pollutants" aria-label="Gráfico histórico de partículas em suspensão" role="img"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Seção de Análise de Dados e Estatística -->
     <section class="analysis-section" aria-labelledby="analysis-heading">
       <div class="section-header">
@@ -376,6 +507,7 @@
   <script src="/js/accessibility.js"></script>
   <script src="/js/charts.js"></script>
   <script src="/js/map.js"></script>
+  <script src="/js/history.js"></script>
   <script src="/js/app.js"></script>
   <script src="/js/pwa.js"></script>
 </body>

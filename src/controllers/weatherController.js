@@ -50,11 +50,13 @@ async function getAllCurrent(req, res) {
 
 /**
  * Retorna histórico persistido no banco SQLite para gráficos e análises
+ * Suporta filtro por período: hours=24 (padrão), hours=168 (7 dias), hours=720 (30 dias)
  */
 async function getCityHistory(req, res) {
   try {
     const { cityId } = req.params;
-    const limit = Math.min(100, Math.max(5, parseInt(req.query.limit, 10) || 24));
+    const hours = Math.min(720, Math.max(1, parseInt(req.query.hours, 10) || 24));
+    const limit = Math.min(200, Math.max(5, parseInt(req.query.limit, 10) || 100));
 
     const city = getCityById(cityId);
     if (!city) {
@@ -82,15 +84,43 @@ async function getCityHistory(req, res) {
         ON w.city_id = a.city_id 
         AND strftime('%Y-%m-%d %H', w.recorded_at) = strftime('%Y-%m-%d %H', a.recorded_at)
       WHERE w.city_id = ?
-      ORDER BY w.recorded_at DESC
+        AND w.recorded_at >= datetime('now', 'localtime', '-' || ? || ' hours')
+      ORDER BY w.recorded_at ASC
       LIMIT ?
-    `, [city.id, limit]);
+    `, [city.id, hours, limit]);
+
+    // Monta séries temporais prontas para Chart.js
+    const series = {
+      labels: [],
+      temperature: [],
+      humidity: [],
+      iqar: [],
+      pm2_5: [],
+      pm10: [],
+      precipitation: []
+    };
+
+    rows.forEach(row => {
+      const dt = new Date(row.recorded_at);
+      const label = hours <= 24
+        ? dt.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+        : dt.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit' }) + 'h';
+      series.labels.push(label);
+      series.temperature.push(row.temperature !== null ? +row.temperature.toFixed(1) : null);
+      series.humidity.push(row.relative_humidity !== null ? Math.round(row.relative_humidity) : null);
+      series.iqar.push(row.conama_iqar !== null ? Math.round(row.conama_iqar) : null);
+      series.pm2_5.push(row.pm2_5 !== null ? +row.pm2_5.toFixed(1) : null);
+      series.pm10.push(row.pm10 !== null ? +row.pm10.toFixed(1) : null);
+      series.precipitation.push(row.precipitation !== null ? +row.precipitation.toFixed(1) : null);
+    });
 
     return res.json({
       success: true,
       city,
+      period: { hours, label: hours <= 24 ? 'Últimas 24h' : hours <= 168 ? 'Últimos 7 dias' : 'Últimos 30 dias' },
       count: rows.length,
-      data: rows.reverse() // Ordena cronológico crescente para plotagem de gráficos
+      series,
+      data: rows
     });
   } catch (error) {
     return res.status(500).json({ success: false, error: error.message });
