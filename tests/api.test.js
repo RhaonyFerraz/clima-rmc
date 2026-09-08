@@ -86,4 +86,22 @@ describe('Testes de Integração - API REST ClimaRMC', () => {
       expect(res.headers['content-type']).toMatch(/application\/json/);
     });
   });
+
+  describe('PWA - Progressive Web App Assets', () => {
+    test('deve servir o manifest.json com configurações válidas de PWA', async () => {
+      const res = await request(app).get('/manifest.json');
+      expect(res.statusCode).toBe(200);
+      expect(res.body.display).toBe('standalone');
+      expect(res.body.start_url).toBe('/');
+      expect(res.body.name).toContain('ClimaRMC');
+      expect(Array.isArray(res.body.icons)).toBe(true);
+    });
+
+    test('deve servir o Service Worker (sw.js)', async () => {
+      const res = await request(app).get('/sw.js');
+      expect(res.statusCode).toBe(200);
+      expect(res.text).toContain('CACHE_NAME');
+      expect(res.text).toContain('addEventListener');
+    });
+  });
 });

@@ -1,0 +1,50 @@
+{
+  "name": "ClimaRMC - Monitoramento Climático e Qualidade do Ar",
+  "short_name": "ClimaRMC",
+  "description": "Aplicativo de monitoramento meteorológico e qualidade do ar em tempo real para Campinas, Sumaré e Hortolândia.",
+  "start_url": "/",
+  "id": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#0284c7",
+  "orientation": "portrait-primary",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Campinas",
+      "short_name": "Campinas",
+      "description": "Ver clima e qualidade do ar em Campinas",
+      "url": "/?city=campinas",
+      "icons": [{ "src": "/icons/icon.svg", "sizes": "192x192" }]
+    },
+    {
+      "name": "Sumaré",
+      "short_name": "Sumaré",
+      "description": "Ver clima e qualidade do ar em Sumaré",
+      "url": "/?city=sumare",
+      "icons": [{ "src": "/icons/icon.svg", "sizes": "192x192" }]
+    },
+    {
+      "name": "Hortolândia",
+      "short_name": "Hortolândia",
+      "description": "Ver clima e qualidade do ar em Hortolândia",
+      "url": "/?city=hortolandia",
+      "icons": [{ "src": "/icons/icon.svg", "sizes": "192x192" }]
+    }
+  ],
+  "categories": ["weather", "utilities", "education"]
+}

@@ -157,6 +157,25 @@
     aqiPillEl.textContent = airQuality.category;
     aqiPillEl.style.backgroundColor = airQuality.color;
 
+    // Atualiza ponteiro visual da barra de risco CONAMA
+    const pointerEl = document.getElementById('aqi-meter-pointer');
+    if (pointerEl) {
+      let percentage = 10;
+      const val = airQuality.iqarConama || 0;
+      if (val <= 40) {
+        percentage = (val / 40) * 20;
+      } else if (val <= 80) {
+        percentage = 20 + ((val - 40) / 40) * 20;
+      } else if (val <= 120) {
+        percentage = 40 + ((val - 80) / 40) * 20;
+      } else if (val <= 200) {
+        percentage = 60 + ((val - 120) / 80) * 25;
+      } else {
+        percentage = Math.min(98, 85 + ((val - 200) / 100) * 13);
+      }
+      pointerEl.style.left = `${Math.max(2, Math.min(98, percentage))}%`;
+    }
+
     document.getElementById('aqi-recommendation-text').textContent = airQuality.recommendation;
     document.getElementById('val-pm25').textContent = `${airQuality.pm2_5 ?? '--'} µg/m³`;
     document.getElementById('val-pm10').textContent = `${airQuality.pm10 ?? '--'} µg/m³`;
