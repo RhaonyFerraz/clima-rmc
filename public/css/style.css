@@ -1532,18 +1532,64 @@ body {
     gap: 6px;
   }
 
+  /* Cards de previsão: 2 por linha para caber sem cortar */
   .forecast-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
   }
 
   .forecast-card {
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 12px 16px;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 8px;
+    min-height: unset;
+  }
+
+  .forecast-day {
+    font-size: 0.9rem;
+  }
+
+  .forecast-date {
+    font-size: 0.7rem;
+    margin-bottom: 6px;
+  }
+
+  .forecast-icon {
+    font-size: 2rem;
+    margin-bottom: 4px;
+  }
+
+  .forecast-condition {
+    font-size: 0.75rem;
+    min-height: unset;
+    margin-bottom: 8px;
   }
 
   .forecast-temp-range {
-    margin: 0;
+    margin: 0 0 6px;
+    gap: 6px;
+  }
+
+  .temp-min, .temp-max {
+    font-size: 0.9rem;
+  }
+
+  .temp-divider {
+    width: 18px;
+  }
+
+  .forecast-rain-badge {
+    font-size: 0.7rem;
+    padding: 3px 7px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .forecast-card.today::before {
+    font-size: 0.6rem;
+    padding: 2px 4px;
   }
 
   .hist-stats-row {
