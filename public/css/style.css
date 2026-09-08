@@ -123,12 +123,14 @@ body {
 }
 
 .brand-title {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 800;
+  letter-spacing: -0.01em;
   background: var(--accent-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
+  line-height: 1.2;
 }
 
 .brand-subtitle {
