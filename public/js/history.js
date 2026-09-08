@@ -36,13 +36,16 @@
 
     if (!ctxTemp || !ctxAqi || !ctxPoll || typeof Chart === 'undefined') return;
 
+    // Padrão global escuro e nítido para legibilidade máxima
+    Chart.defaults.color = '#0f172a';
+
     const baseGridConfig = {
       color: 'rgba(148, 163, 184, 0.15)',
       drawBorder: false
     };
     const baseTickConfig = {
-      color: '#334155',
-      font: { family: 'Inter', size: 11, weight: '500' }
+      color: '#0f172a',
+      font: { family: 'Inter', size: 11, weight: '600' }
     };
 
     // Gráfico 1: Temperatura e Sensação Térmica
@@ -56,7 +59,8 @@
         interaction: { mode: 'index', intersect: false },
         plugins: {
           legend: {
-            labels: { color: '#0f172a', font: { family: 'Inter', size: 12, weight: '600' }, boxWidth: 14 }
+            display: true,
+            labels: { color: '#0f172a', font: { family: 'Inter', size: 13, weight: '700' }, boxWidth: 16, padding: 14 }
           },
           tooltip: {
             backgroundColor: 'rgba(15, 23, 42, 0.92)',
@@ -97,7 +101,8 @@
         interaction: { mode: 'index', intersect: false },
         plugins: {
           legend: {
-            labels: { color: '#0f172a', font: { family: 'Inter', size: 12, weight: '600' }, boxWidth: 14 }
+            display: true,
+            labels: { color: '#0f172a', font: { family: 'Inter', size: 13, weight: '700' }, boxWidth: 16, padding: 14 }
           },
           tooltip: {
             backgroundColor: 'rgba(15, 23, 42, 0.92)',
@@ -142,7 +147,8 @@
         interaction: { mode: 'index', intersect: false },
         plugins: {
           legend: {
-            labels: { color: '#0f172a', font: { family: 'Inter', size: 12, weight: '600' }, boxWidth: 14 }
+            display: true,
+            labels: { color: '#0f172a', font: { family: 'Inter', size: 13, weight: '700' }, boxWidth: 16, padding: 14 }
           },
           tooltip: {
             backgroundColor: 'rgba(15, 23, 42, 0.92)',
@@ -201,6 +207,8 @@
 
       // Gráfico 1: Temperatura + Umidade
       if (chartTemp) {
+        chartTemp.options.plugins.legend.labels.color = '#0f172a';
+        chartTemp.options.plugins.legend.labels.font = { family: 'Inter', size: 13, weight: '700' };
         chartTemp.data.labels = series.labels;
         chartTemp.data.datasets = [
           {
