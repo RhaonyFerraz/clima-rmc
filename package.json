@@ -1,0 +1,41 @@
+{
+  "name": "clima-rmc",
+  "version": "1.0.0",
+  "description": "Sistema de Monitoramento Climático e Qualidade do Ar da Região Metropolitana de Campinas (Campinas, Sumaré e Hortolândia)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "jest --detectOpenHandles --forceExit"
+  },
+  "keywords": [
+    "weather",
+    "air-quality",
+    "rmc",
+    "campinas",
+    "sumare",
+    "hortolandia",
+    "accessibility",
+    "node",
+    "express"
+  ],
+  "author": "Equipe ClimaRMC",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "node-cron": "^3.0.3",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.9",
+    "supertest": "^7.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "verbose": true
+  }
+}

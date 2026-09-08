@@ -1,0 +1,15 @@
+services:
+  clima-rmc:
+    build: .
+    container_name: clima_rmc_app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+      - DB_PATH=/app/data/clima_rmc.db
+      - WEATHER_PROVIDER=open-meteo
+      # - GOOGLE_WEATHER_API_KEY=sua_chave_aqui
+    volumes:
+      - ./data:/app/data

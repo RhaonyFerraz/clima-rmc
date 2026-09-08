@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sistema de monitoramento meteorológico, qualidade do ar (IQAr CONAMA) e análise estatística para as cidades de Campinas, Sumaré e Hortolândia (RMC).">
+  <meta name="theme-color" content="#0b0f19">
+  <title>ClimaRMC - Monitoramento Climático e Qualidade do Ar</title>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Estilos Customizados -->
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!-- Chart.js para visualização de dados -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- Link de Salto para Acessibilidade (WCAG 2.1) -->
+  <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+  <!-- Região ARIA para Anúncios de Leitores de Tela -->
+  <div id="a11y-live-announcer" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Barra Superior de Ferramentas de Acessibilidade -->
+  <aside class="accessibility-bar" aria-label="Ferramentas de Acessibilidade">
+    <div class="accessibility-notice">
+      <span>♿ Acessibilidade WCAG 2.1 AA</span>
+    </div>
+    <div class="accessibility-tools">
+      <button id="btn-contrast" class="a11y-btn" aria-pressed="false">👁️ Alto Contraste</button>
+      <button id="btn-theme" class="a11y-btn" aria-label="Alternar tema claro ou escuro">☀️ Modo Claro</button>
+      <span aria-hidden="true" style="color: var(--border-color);">|</span>
+      <button id="btn-font-dec" class="a11y-btn" aria-label="Diminuir tamanho da fonte">A-</button>
+      <button id="btn-font-reset" class="a11y-btn" aria-label="Restaurar tamanho da fonte padrão">A</button>
+      <button id="btn-font-inc" class="a11y-btn" aria-label="Aumentar tamanho da fonte">A+</button>
+    </div>
+  </aside>
+
+  <!-- Cabeçalho Principal e Navegação -->
+  <header class="main-header" role="banner">
+    <div class="header-container">
+      <div class="brand">
+        <span class="brand-icon" aria-hidden="true">🌱</span>
+        <div>
+          <h1 class="brand-title">ClimaRMC</h1>
+          <div class="brand-subtitle">Monitoramento e Qualidade do Ar • Campinas • Sumaré • Hortolândia</div>
+        </div>
+      </div>
+
+      <!-- Seletor de Cidades da RMC -->
+      <nav class="city-selector" role="tablist" aria-label="Seleção de cidades monitoradas">
+        <button id="tab-campinas" class="city-tab active" role="tab" aria-selected="true" aria-controls="panel-weather" data-city="campinas">Campinas</button>
+        <button id="tab-sumare" class="city-tab" role="tab" aria-selected="false" aria-controls="panel-weather" data-city="sumare">Sumaré</button>
+        <button id="tab-hortolandia" class="city-tab" role="tab" aria-selected="false" aria-controls="panel-weather" data-city="hortolandia">Hortolândia</button>
+      </nav>
+
+      <!-- Botão de Sincronização em Tempo Real -->
+      <button id="btn-sync" class="sync-btn" aria-label="Atualizar leituras de clima e qualidade do ar agora">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+        </svg>
+        <span>Atualizar</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main id="main-content" class="content-wrapper" role="main">
+
+    <!-- Seção de Alertas em Tempo Real -->
+    <section aria-labelledby="alerts-heading" class="alerts-section">
+      <h2 id="alerts-heading" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0);">Alertas Meteorológicos e Ambientais</h2>
+      <div id="alerts-container" class="alerts-container">
+        <!-- Renderizado dinamicamente via app.js -->
+      </div>
+    </section>
+
+    <!-- Painel de Destaques da Cidade Selecionada -->
+    <section class="dashboard-grid" aria-labelledby="current-conditions-heading">
+      <h2 id="current-conditions-heading" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0);">Condições Atuais da Cidade</h2>
+
+      <!-- Card 1: Clima e Temperatura -->
+      <article class="metric-card" aria-labelledby="weather-title">
+        <div class="card-header">
+          <h3 id="weather-title" class="card-title">
+            <span aria-hidden="true">⛅</span> Clima Atual • <span class="dynamic-city-name">Campinas</span>
+          </h3>
+          <span class="card-badge" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8;">Tempo Real</span>
+        </div>
+
+        <div class="weather-main-display">
+          <div class="weather-temp-group">
+            <span id="weather-temp" class="temp-large">--</span>
+            <span class="temp-unit">°C</span>
+          </div>
+          <div class="weather-icon-condition">
+            <span id="weather-icon" class="weather-icon-large" aria-hidden="true">☀️</span>
+            <span id="weather-condition" class="weather-condition-text">Carregando...</span>
+          </div>
+        </div>
+
+        <div class="weather-details-grid">
+          <div class="detail-item">
+            <div class="detail-label">Sensação Térmica</div>
+            <div id="weather-apparent" class="detail-value">--°C</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Umidade Relativa</div>
+            <div id="weather-humidity" class="detail-value">--%</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Vento Médio</div>
+            <div id="weather-wind" class="detail-value">-- km/h</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Pressão</div>
+            <div id="weather-pressure" class="detail-value">-- hPa</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2: Qualidade do Ar (IQAr CONAMA 491/2018) -->
+      <article class="metric-card" aria-labelledby="aqi-title">
+        <div class="card-header">
+          <h3 id="aqi-title" class="card-title">
+            <span aria-hidden="true">🍃</span> Qualidade do Ar • <span class="dynamic-city-name">Campinas</span>
+          </h3>
+          <span class="card-badge" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">CONAMA</span>
+        </div>
+
+        <div class="aqi-main-display">
+          <div id="aqi-score" class="aqi-score" aria-label="Índice de Qualidade do Ar">--</div>
+          <div id="aqi-status-pill" class="aqi-status-pill">--</div>
+        </div>
+
+        <div class="aqi-recommendation">
+          <strong>Recomendação de Saúde:</strong>
+          <p id="aqi-recommendation-text">Carregando dados oficiais...</p>
+        </div>
+
+        <div class="pollutants-list" aria-label="Medições dos Poluentes Atmosféricos">
+          <div class="pollutant-box">
+            <div class="pollutant-name">PM2.5</div>
+            <div id="val-pm25" class="pollutant-val">--</div>
+          </div>
+          <div class="pollutant-box">
+            <div class="pollutant-name">PM10</div>
+            <div id="val-pm10" class="pollutant-val">--</div>
+          </div>
+          <div class="pollutant-box">
+            <div class="pollutant-name">Ozônio (O₃)</div>
+            <div id="val-ozone" class="pollutant-val">--</div>
+          </div>
+          <div class="pollutant-box">
+            <div class="pollutant-name">NO₂</div>
+            <div id="val-no2" class="pollutant-val">--</div>
+          </div>
+          <div class="pollutant-box">
+            <div class="pollutant-name">SO₂</div>
+            <div id="val-so2" class="pollutant-val">--</div>
+          </div>
+          <div class="pollutant-box">
+            <div class="pollutant-name">CO</div>
+            <div id="val-co" class="pollutant-val">--</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3: Perfil Geográfico e Demográfico -->
+      <article class="metric-card" aria-labelledby="city-title">
+        <div class="card-header">
+          <h3 id="city-title" class="card-title">
+            <span aria-hidden="true">📍</span> Perfil da Cidade • <span class="dynamic-city-name">Campinas</span>
+          </h3>
+          <span class="card-badge" style="background: rgba(129, 140, 248, 0.15); color: #818cf8;">RMC</span>
+        </div>
+
+        <div class="city-info-content">
+          <p id="city-description" class="city-desc">Carregando perfil municipal...</p>
+          <div class="city-stats">
+            <div class="detail-item">
+              <div class="detail-label">População Estimada</div>
+              <div id="city-population" class="detail-value">--</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-label">Altitude</div>
+              <div id="city-elevation" class="detail-value">--</div>
+            </div>
+            <div class="detail-item" style="grid-column: span 2;">
+              <div class="detail-label">Coordenadas (Lat, Lon)</div>
+              <div id="city-coords" class="detail-value" style="font-size: 0.95rem;">--</div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- Seção de Visualização Gráfica -->
+    <section class="charts-section" aria-labelledby="charts-heading">
+      <div class="section-header">
+        <h2 id="charts-heading" class="section-title">📊 Visualização Temporal e Comparativa</h2>
+        <div style="font-size: 0.9rem; color: var(--text-secondary);">Gráficos dinâmicos atualizados via JavaScript (Chart.js)</div>
+      </div>
+
+      <div class="charts-grid">
+        <!-- Gráfico 1: Temperatura e Umidade Horária -->
+        <div class="chart-card">
+          <h3 class="card-title" style="margin-bottom: 12px; font-size: 1rem;">
+            🌡️ Previsão Horária: Temperatura & Umidade (<span class="dynamic-city-name">Campinas</span>)
+          </h3>
+          <div class="chart-wrapper">
+            <canvas id="chart-weather-hourly" aria-label="Gráfico de linha de temperatura e umidade horária" role="img"></canvas>
+          </div>
+        </div>
+
+        <!-- Gráfico 2: Concentração de Materiais Particulados -->
+        <div class="chart-card">
+          <h3 class="card-title" style="margin-bottom: 12px; font-size: 1rem;">
+            🌫️ Partículas em Suspensão: PM2.5 & PM10 (<span class="dynamic-city-name">Campinas</span>)
+          </h3>
+          <div class="chart-wrapper">
+            <canvas id="chart-pollutants" aria-label="Gráfico de barras de concentração de partículas PM2.5 e PM10" role="img"></canvas>
+          </div>
+        </div>
+
+        <!-- Gráfico 3: Comparativo das 3 Cidades da RMC -->
+        <div class="chart-card" style="grid-column: 1 / -1;">
+          <h3 class="card-title" style="margin-bottom: 12px; font-size: 1rem;">
+            🏙️ Comparativo Simultâneo da RMC (Campinas vs. Sumaré vs. Hortolândia)
+          </h3>
+          <div class="chart-wrapper">
+            <canvas id="chart-rmc-comparison" aria-label="Gráfico comparativo de temperatura, umidade e qualidade do ar entre Campinas, Sumaré e Hortolândia" role="img"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção de Análise de Dados e Estatística -->
+    <section class="analysis-section" aria-labelledby="analysis-heading">
+      <div class="section-header">
+        <h2 id="analysis-heading" class="section-title">📈 Análise Estatística de Dados & Relatórios</h2>
+        <div class="export-actions">
+          <button id="btn-export-csv" class="btn-export" aria-label="Baixar relatório completo em formato CSV">
+            📥 Exportar CSV
+          </button>
+          <button id="btn-export-json" class="btn-export" aria-label="Baixar relatório completo em formato JSON">
+            📋 Exportar JSON
+          </button>
+        </div>
+      </div>
+
+      <!-- Insight Estatístico de Correlação -->
+      <div class="analysis-insights-box">
+        <div class="insight-title">
+          <span>🔬</span> Correlação de Pearson: Umidade Relativa vs. Poluição (PM2.5)
+          <span id="correlation-val" style="color: var(--accent-primary); font-weight: 800; margin-left: 8px;">r = --</span>
+        </div>
+        <p id="correlation-text" class="insight-text">
+          Calculando análise estatística a partir do banco de dados histórico SQLite...
+        </p>
+      </div>
+
+      <!-- Tabela Comparativa de Médias e Histórico -->
+      <div class="analysis-table-container">
+        <table class="analysis-table" aria-label="Tabela de resumo estatístico das leituras da RMC">
+          <thead>
+            <tr>
+              <th scope="col">Município</th>
+              <th scope="col">Temperatura Média (Min / Max)</th>
+              <th scope="col">Umidade Média (Min / Max)</th>
+              <th scope="col">Média PM2.5</th>
+              <th scope="col">Média PM10</th>
+              <th scope="col">Média IQAr CONAMA</th>
+              <th scope="col">Volume de Dados</th>
+            </tr>
+          </thead>
+          <tbody id="analysis-tbody">
+            <tr>
+              <td colspan="7" style="text-align: center; color: var(--text-muted);">Carregando dados estatísticos persistidos no SQLite...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Rodapé Institucional e Acadêmico -->
+  <footer class="main-footer" role="contentinfo">
+    <div class="footer-content">
+      <p><strong>ClimaRMC</strong> — Sistema de Monitoramento Climático e Qualidade do Ar da Região Metropolitana de Campinas</p>
+      <div class="footer-tags">
+        <span class="footer-tag">Node.js & Express</span>
+        <span class="footer-tag">SQLite Database</span>
+        <span class="footer-tag">Vanilla JS ES6+</span>
+        <span class="footer-tag">Open-Meteo & Google API Ready</span>
+        <span class="footer-tag">Acessibilidade WCAG 2.1 AA</span>
+        <span class="footer-tag">Docker & Nuvem</span>
+        <span class="footer-tag">Testes com Jest</span>
+      </div>
+      <p style="font-size: 0.75rem; margin-top: 8px;">
+        Desenvolvido para trabalho acadêmico universitário com rigor técnico, dados abertos e acessibilidade digital inclusiva.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts JavaScript do Aplicativo -->
+  <script src="/js/accessibility.js"></script>
+  <script src="/js/charts.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
