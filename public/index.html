@@ -47,7 +47,6 @@
   <header class="main-header" role="banner">
     <div class="header-container">
       <div class="brand">
-        <span class="brand-icon" aria-hidden="true">🌱</span>
         <div>
           <h1 class="brand-title">ClimaRMC</h1>
           <div class="brand-subtitle">Monitoramento e Qualidade do Ar • Campinas • Sumaré • Hortolândia</div>
@@ -98,7 +97,7 @@
       <article class="metric-card" aria-labelledby="weather-title">
         <div class="card-header">
           <h3 id="weather-title" class="card-title">
-            <span aria-hidden="true">⛅</span> Clima Atual • <span class="dynamic-city-name">Campinas</span>
+            Clima Atual • <span class="dynamic-city-name">Campinas</span>
           </h3>
           <span class="card-badge" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8;">Tempo Real</span>
         </div>
@@ -180,7 +179,7 @@
       <article class="metric-card" aria-labelledby="aqi-title">
         <div class="card-header">
           <h3 id="aqi-title" class="card-title">
-            <span aria-hidden="true">🍃</span> Qualidade do Ar • <span class="dynamic-city-name">Campinas</span>
+            Qualidade do Ar • <span class="dynamic-city-name">Campinas</span>
           </h3>
           <span class="card-badge" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">CONAMA</span>
         </div>
@@ -241,7 +240,7 @@
       <article class="metric-card" aria-labelledby="city-title">
         <div class="card-header">
           <h3 id="city-title" class="card-title">
-            <span aria-hidden="true">📍</span> Perfil da Cidade • <span class="dynamic-city-name">Campinas</span>
+            Perfil da Cidade • <span class="dynamic-city-name">Campinas</span>
           </h3>
           <span class="card-badge" style="background: rgba(129, 140, 248, 0.15); color: #818cf8;">RMC</span>
         </div>
@@ -270,7 +269,7 @@
     <section class="map-section" aria-labelledby="map-heading">
       <div class="section-header">
         <div>
-          <h2 id="map-heading" class="section-title">🗺️ Mapa Geográfico Interativo da RMC</h2>
+          <h2 id="map-heading" class="section-title">Mapa Geográfico Interativo da RMC</h2>
           <div style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 2px;">
             Distribuição espacial das estações na Região Metropolitana de Campinas. Clique em qualquer cidade no mapa para visualizar seus dados em tempo real.
           </div>
@@ -292,7 +291,7 @@
     <section class="forecast-section" aria-labelledby="forecast-heading">
       <div class="section-header">
         <div>
-          <h2 id="forecast-heading" class="section-title">📅 Previsão Meteorológica Estendida (5 Dias) • <span class="dynamic-city-name">Campinas</span></h2>
+          <h2 id="forecast-heading" class="section-title">Previsão Meteorológica Estendida (5 Dias) • <span class="dynamic-city-name">Campinas</span></h2>
           <div style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 2px;">
             Tendência diária de temperaturas mínimas e máximas, probabilidade de chuva e condições do tempo.
           </div>
@@ -307,7 +306,7 @@
     <!-- Seção de Visualização Gráfica -->
     <section class="charts-section" aria-labelledby="charts-heading">
       <div class="section-header">
-        <h2 id="charts-heading" class="section-title">📊 Visualização Temporal e Comparativa</h2>
+        <h2 id="charts-heading" class="section-title">Visualização Temporal e Comparativa</h2>
         <div style="font-size: 0.9rem; color: var(--text-secondary);">Gráficos dinâmicos atualizados via JavaScript (Chart.js)</div>
       </div>
 
@@ -315,7 +314,7 @@
         <!-- Gráfico 1: Temperatura e Umidade Horária -->
         <div class="chart-card">
           <h3 class="card-title" style="margin-bottom: 12px; font-size: 1rem;">
-            🌡️ Previsão Horária: Temperatura & Umidade (<span class="dynamic-city-name">Campinas</span>)
+            Previsão Horária: Temperatura & Umidade (<span class="dynamic-city-name">Campinas</span>)
           </h3>
           <div class="chart-wrapper">
             <canvas id="chart-weather-hourly" aria-label="Gráfico de linha de temperatura e umidade horária" role="img"></canvas>
@@ -335,7 +334,7 @@
         <!-- Gráfico 3: Comparativo das 3 Cidades da RMC -->
         <div class="chart-card" style="grid-column: 1 / -1;">
           <h3 class="card-title" style="margin-bottom: 12px; font-size: 1rem;">
-            🏙️ Comparativo Simultâneo da RMC (Campinas vs. Sumaré vs. Hortolândia)
+            Comparativo Simultâneo da RMC (Campinas vs. Sumaré vs. Hortolândia)
           </h3>
           <div class="chart-wrapper">
             <canvas id="chart-rmc-comparison" aria-label="Gráfico comparativo de temperatura, umidade e qualidade do ar entre Campinas, Sumaré e Hortolândia" role="img"></canvas>
@@ -350,7 +349,7 @@
     <section class="history-section" aria-labelledby="history-heading">
       <div class="section-header">
         <div>
-          <h2 id="history-heading" class="section-title">🗂️ Dashboard Histórico do Banco de Dados</h2>
+          <h2 id="history-heading" class="section-title">Dashboard Histórico do Banco de Dados</h2>
           <div style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 2px;">
             Séries temporais extraídas do SQLite local — demonstração de persistência e análise de dados ao longo do tempo.
           </div>
@@ -371,16 +370,16 @@
           <div id="hist-stat-period" class="hist-stat-sub">--</div>
         </div>
         <div class="hist-stat-card">
-          <div class="hist-stat-label">🌡️ Temperatura Média</div>
+          <div class="hist-stat-label">Temperatura Média</div>
           <div id="hist-stat-temp-avg" class="hist-stat-value">--</div>
           <div id="hist-stat-temp-range" class="hist-stat-sub">min ~ max</div>
         </div>
         <div class="hist-stat-card">
-          <div class="hist-stat-label">💧 Umidade Média</div>
+          <div class="hist-stat-label">Umidade Média</div>
           <div id="hist-stat-hum-avg" class="hist-stat-value">--</div>
         </div>
         <div class="hist-stat-card">
-          <div class="hist-stat-label">🍃 IQAr Médio CONAMA</div>
+          <div class="hist-stat-label">IQAr Médio CONAMA</div>
           <div id="hist-stat-iqar-avg" class="hist-stat-value">--</div>
         </div>
       </div>
@@ -404,7 +403,7 @@
         <!-- Gráfico A: Temperatura + Umidade -->
         <div class="chart-card" style="grid-column: 1 / -1;">
           <h3 class="card-title" style="margin-bottom: 12px; font-size: 1rem;">
-            🌡️ Temperatura e Umidade Histórica — <span class="dynamic-city-name">Campinas</span>
+            Temperatura e Umidade Histórica — <span class="dynamic-city-name">Campinas</span>
           </h3>
           <div class="chart-wrapper" style="height: 240px;">
             <canvas id="chart-history-temp" aria-label="Gráfico histórico de temperatura e umidade" role="img"></canvas>
@@ -414,7 +413,7 @@
         <!-- Gráfico B: IQAr CONAMA -->
         <div class="chart-card">
           <h3 class="card-title" style="margin-bottom: 12px; font-size: 1rem;">
-            🍃 Evolução do IQAr CONAMA
+            Evolução do IQAr CONAMA
           </h3>
           <div class="chart-wrapper" style="height: 220px;">
             <canvas id="chart-history-aqi" aria-label="Gráfico histórico do índice de qualidade do ar CONAMA" role="img"></canvas>
@@ -436,7 +435,7 @@
     <!-- Seção de Análise de Dados e Estatística -->
     <section class="analysis-section" aria-labelledby="analysis-heading">
       <div class="section-header">
-        <h2 id="analysis-heading" class="section-title">📈 Análise Estatística de Dados & Relatórios</h2>
+        <h2 id="analysis-heading" class="section-title">Análise Estatística de Dados & Relatórios</h2>
         <div class="export-actions">
           <button id="btn-export-csv" class="btn-export" aria-label="Baixar relatório completo em formato CSV">
             📥 Exportar CSV
@@ -450,7 +449,7 @@
       <!-- Insight Estatístico de Correlação -->
       <div class="analysis-insights-box">
         <div class="insight-title">
-          <span>🔬</span> Correlação de Pearson: Umidade Relativa vs. Poluição (PM2.5)
+          Correlação de Pearson: Umidade Relativa vs. Poluição (PM2.5)
           <span id="correlation-val" style="color: var(--accent-primary); font-weight: 800; margin-left: 8px;">r = --</span>
         </div>
         <p id="correlation-text" class="insight-text">

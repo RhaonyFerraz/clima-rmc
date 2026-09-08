@@ -111,7 +111,7 @@
       // Popup rico e interativo
       const popupContent = `
         <div class="map-popup-card">
-          <h4 style="margin: 0 0 6px; font-size: 1rem; color: #0f172a; font-weight: 800;">📍 ${item.city.name}</h4>
+          <h4 style="margin: 0 0 6px; font-size: 1rem; color: #0f172a; font-weight: 800;">${item.city.name}</h4>
           <div style="font-size: 0.85rem; color: #475569; margin-bottom: 8px;">${item.weather.condition}</div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 0.82rem; margin-bottom: 8px;">
             <div><strong>Temp:</strong> ${Math.round(temp)}°C</div>

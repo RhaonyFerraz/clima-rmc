@@ -282,7 +282,6 @@
           <span class="temp-max" title="Máxima prevista">${day.tempMax}°</span>
         </div>
         <div class="forecast-rain-badge">
-          <span aria-hidden="true">💧</span>
           <span>${day.precipitationProb}%</span>
           ${day.precipitationSum > 0 ? `<span style="font-size: 0.65rem; color: #0369a1;">(${day.precipitationSum}mm)</span>` : ''}
         </div>
