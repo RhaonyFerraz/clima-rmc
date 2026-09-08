@@ -53,9 +53,16 @@
   padding: 0;
 }
 
+/* Evita que imagens, vídeos e canvas causem overflow horizontal */
+img, video, canvas, svg, picture {
+  max-width: 100%;
+  display: block;
+}
+
 html {
   font-size: var(--font-size-multiplier);
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -64,8 +71,9 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  width: 100%;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Link de Salto para Acessibilidade */
@@ -205,8 +213,10 @@ body {
 /* Container de Conteúdo */
 .content-wrapper {
   max-width: 1440px;
+  width: 100%;
   margin: 24px auto;
   padding: 0 clamp(16px, 3vw, 36px) 60px;
+  overflow-x: hidden;
 }
 
 /* Banner de Alertas Ativos */
@@ -714,7 +724,7 @@ body {
 
 .charts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 24px;
 }
 
