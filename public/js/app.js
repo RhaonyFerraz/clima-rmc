@@ -302,11 +302,10 @@
 
     if (!alerts || alerts.length === 0) {
       container.innerHTML = `
-        <div class="alert-card warning" style="background: rgba(16, 185, 129, 0.1); border-color: #10b981; color: #6ee7b7;">
-          <span class="alert-icon" aria-hidden="true">✅</span>
+        <div class="alert-card" style="background: #f0fdf4; border: 1.5px solid #bbf7d0; border-left: 5px solid #10b981; color: #065f46;">
           <div class="alert-content">
-            <h3>Condições Estáveis</h3>
-            <p>Nenhum alerta meteorológico ou de emergência emitido no momento para ${cityName}.</p>
+            <h3 style="color: #065f46; margin: 0 0 4px; font-weight: 700;">Condições Estáveis</h3>
+            <p style="color: #047857; margin: 0; font-size: 0.9rem;">Nenhum alerta meteorológico ou de emergência emitido no momento para ${cityName}.</p>
           </div>
         </div>
       `;
