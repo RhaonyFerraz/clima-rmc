@@ -8,10 +8,10 @@
   let pollutantsChartInstance = null;
   let comparisonChartInstance = null;
 
-  // Cores limpas e elegantes para o tema padrão
+  // Cores limpas e contrastantes para o tema padrão
   const getChartColors = () => {
     return {
-      text: '#475569',
+      text: '#0f172a',
       grid: '#e2e8f0',
       tempLine: '#0284c7',
       tempFill: 'rgba(2, 132, 199, 0.12)',
@@ -77,7 +77,7 @@
         },
         plugins: {
           legend: {
-            labels: { color: colors.text, font: { family: 'Inter', size: 12 } }
+            labels: { color: colors.text, font: { family: 'Inter', size: 12, weight: '600' } }
           },
           tooltip: {
             backgroundColor: 'rgba(15, 23, 42, 0.9)',
@@ -154,7 +154,7 @@
         maintainAspectRatio: false,
         plugins: {
           legend: {
-            labels: { color: colors.text, font: { family: 'Inter', size: 12 } }
+            labels: { color: colors.text, font: { family: 'Inter', size: 12, weight: '600' } }
           }
         },
         scales: {
@@ -220,7 +220,7 @@
         maintainAspectRatio: false,
         plugins: {
           legend: {
-            labels: { color: colors.text, font: { family: 'Inter', size: 12 } }
+            labels: { color: colors.text, font: { family: 'Inter', size: 12, weight: '600' } }
           }
         },
         scales: {
