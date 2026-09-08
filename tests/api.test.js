@@ -39,6 +39,9 @@ describe('Testes de Integração - API REST ClimaRMC', () => {
       expect(res.body.success).toBe(true);
       expect(res.body.data.city.id).toBe('campinas');
       expect(res.body.data).toHaveProperty('weather');
+      expect(res.body.data.weather).toHaveProperty('forecastDaily');
+      expect(Array.isArray(res.body.data.weather.forecastDaily)).toBe(true);
+      expect(res.body.data.weather.forecastDaily.length).toBeGreaterThanOrEqual(5);
       expect(res.body.data).toHaveProperty('airQuality');
       expect(res.body.data.airQuality).toHaveProperty('iqarConama');
     }, 15000); // 15s timeout para requisição externa na primeira vez

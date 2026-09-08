@@ -207,9 +207,50 @@
       }
     }
 
+    // 6. Previsão Estendida de 5 Dias
+    if (weather.forecastDaily) {
+      renderDailyForecast(weather.forecastDaily);
+    }
+
     if (window.A11y) {
       window.A11y.announce(`Dados de ${city.name} carregados: Temperatura de ${Math.round(weather.temperature)} graus e qualidade do ar ${airQuality.category}.`);
     }
+  }
+
+  /**
+   * Renderiza os cards de previsão estendida dos próximos 5 dias
+   */
+  function renderDailyForecast(forecastList) {
+    const container = document.getElementById('forecast-daily-container');
+    if (!container || !forecastList) return;
+
+    container.innerHTML = '';
+
+    forecastList.forEach((day, index) => {
+      const isToday = index === 0;
+      const card = document.createElement('article');
+      card.className = `forecast-card ${isToday ? 'today' : ''}`;
+      card.setAttribute('aria-label', `Previsão para ${day.weekday}, ${day.dayFormatted}: ${day.condition}, mínima de ${day.tempMin} graus e máxima de ${day.tempMax} graus.`);
+
+      card.innerHTML = `
+        <div class="forecast-day">${day.weekday}</div>
+        <div class="forecast-date">${day.dayFormatted}</div>
+        <div class="forecast-icon" aria-hidden="true">${day.icon}</div>
+        <div class="forecast-condition">${day.condition}</div>
+        <div class="forecast-temp-range">
+          <span class="temp-min" title="Mínima prevista">${day.tempMin}°</span>
+          <span class="temp-divider" aria-hidden="true"></span>
+          <span class="temp-max" title="Máxima prevista">${day.tempMax}°</span>
+        </div>
+        <div class="forecast-rain-badge">
+          <span aria-hidden="true">💧</span>
+          <span>${day.precipitationProb}%</span>
+          ${day.precipitationSum > 0 ? `<span style="font-size: 0.65rem; color: #0369a1;">(${day.precipitationSum}mm)</span>` : ''}
+        </div>
+      `;
+
+      container.appendChild(card);
+    });
   }
 
   /**

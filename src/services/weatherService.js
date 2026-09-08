@@ -16,9 +16,9 @@ async function fetchOpenMeteoWeather(latitude, longitude) {
     longitude,
     current: 'temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,surface_pressure,wind_speed_10m,wind_direction_10m',
     hourly: 'temperature_2m,relative_humidity_2m,precipitation_probability,precipitation',
-    daily: 'temperature_2m_max,temperature_2m_min,precipitation_sum',
+    daily: 'temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,weather_code',
     timezone: 'America/Sao_Paulo',
-    forecast_days: 3
+    forecast_days: 5
   };
 
   const response = await axios.get(url, { params, timeout: 8000 });
@@ -195,7 +195,27 @@ async function getCityCompleteData(cityId) {
       weatherCode: weatherCurrent.weather_code,
       condition: weatherInfo.description,
       icon: weatherInfo.icon,
-      forecastDaily: weatherRaw.daily,
+      forecastDaily: (weatherRaw.daily?.time || []).map((dateStr, idx) => {
+        const wCode = weatherRaw.daily.weather_code ? weatherRaw.daily.weather_code[idx] : 0;
+        const wInfo = getWeatherInterpretation(wCode);
+        const dateObj = new Date(dateStr + 'T12:00:00');
+        const weekdays = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+        const weekday = idx === 0 ? 'Hoje' : weekdays[dateObj.getDay()];
+        const dayFormatted = `${String(dateObj.getDate()).padStart(2, '0')}/${String(dateObj.getMonth() + 1).padStart(2, '0')}`;
+
+        return {
+          date: dateStr,
+          weekday,
+          dayFormatted,
+          tempMax: Math.round(weatherRaw.daily.temperature_2m_max[idx]),
+          tempMin: Math.round(weatherRaw.daily.temperature_2m_min[idx]),
+          precipitationSum: weatherRaw.daily.precipitation_sum ? Number(weatherRaw.daily.precipitation_sum[idx].toFixed(1)) : 0,
+          precipitationProb: weatherRaw.daily.precipitation_probability_max ? Math.round(weatherRaw.daily.precipitation_probability_max[idx]) : 0,
+          weatherCode: wCode,
+          condition: wInfo.description,
+          icon: wInfo.icon
+        };
+      }),
       forecastHourly: {
         time: weatherRaw.hourly.time.slice(0, 24),
         temperature: weatherRaw.hourly.temperature_2m.slice(0, 24),
