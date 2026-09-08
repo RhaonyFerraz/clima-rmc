@@ -88,47 +88,7 @@ body {
   outline: 3px solid #fff;
 }
 
-/* Barra Superior de Acessibilidade */
-.accessibility-bar {
-  background-color: var(--bg-secondary);
-  border-bottom: 1px solid var(--border-color);
-  padding: 8px 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.875rem;
-}
 
-.accessibility-notice {
-  color: var(--text-secondary);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.accessibility-tools {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.a11y-btn {
-  background: transparent;
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  padding: 4px 10px;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.85rem;
-  transition: var(--transition);
-}
-
-.a11y-btn:hover, .a11y-btn:focus-visible {
-  background: var(--bg-card-hover);
-  border-color: var(--border-focus);
-  outline: 2px solid var(--border-focus);
-}
 
 /* Cabeçalho Principal */
 .main-header {
@@ -682,9 +642,5 @@ body {
     padding: 8px 12px;
   }
   
-  .accessibility-bar {
-    flex-direction: column;
-    gap: 8px;
-    text-align: center;
-  }
+
 }
