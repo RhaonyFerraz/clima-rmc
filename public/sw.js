@@ -3,16 +3,20 @@
  * Suporte offline, cache inteligente e alta disponibilidade
  */
 
-const CACHE_NAME = 'clima-rmc-cache-v1';
+const CACHE_NAME = 'clima-rmc-cache-v2';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/css/style.css',
   '/js/app.js',
   '/js/charts.js',
+  '/js/map.js',
   '/js/accessibility.js',
+  '/js/pwa.js',
   '/manifest.json',
   '/icons/icon.svg',
+  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
+  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
   'https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js',
   'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap'
 ];

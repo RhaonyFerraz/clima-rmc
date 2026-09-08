@@ -102,6 +102,9 @@
         if (window.ClimaCharts) {
           window.ClimaCharts.renderRmcComparisonChart(allCitiesCache);
         }
+        if (window.RmcMap) {
+          window.RmcMap.updateMarkers(allCitiesCache);
+        }
       }
     } catch (err) {
       console.error('Erro ao carregar resumo da RMC:', err);
@@ -114,6 +117,10 @@
   async function selectCity(cityId) {
     currentCityId = cityId;
     try {
+      if (window.RmcMap) {
+        window.RmcMap.highlightCity(cityId);
+      }
+
       const res = await fetch(`/api/weather/${cityId}`);
       const json = await res.json();
 

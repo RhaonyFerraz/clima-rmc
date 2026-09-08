@@ -20,6 +20,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
+  <!-- Leaflet.js para Mapa Interativo da RMC -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
   <!-- Estilos Customizados -->
   <link rel="stylesheet" href="/css/style.css">
 
@@ -220,6 +224,28 @@
       </article>
     </section>
 
+    <!-- Seção do Mapa Interativo da RMC (Leaflet.js) -->
+    <section class="map-section" aria-labelledby="map-heading">
+      <div class="section-header">
+        <div>
+          <h2 id="map-heading" class="section-title">🗺️ Mapa Geográfico Interativo da RMC</h2>
+          <div style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 2px;">
+            Distribuição espacial das estações na Região Metropolitana de Campinas. Clique em qualquer cidade no mapa para visualizar seus dados em tempo real.
+          </div>
+        </div>
+        <div class="map-legend">
+          <span class="legend-item"><span class="legend-dot" style="background: #10b981;"></span> Boa (0-40)</span>
+          <span class="legend-item"><span class="legend-dot" style="background: #f59e0b;"></span> Moderada (41-80)</span>
+          <span class="legend-item"><span class="legend-dot" style="background: #f97316;"></span> Ruim (81-120)</span>
+          <span class="legend-item"><span class="legend-dot" style="background: #ef4444;"></span> Crítica (121+)</span>
+        </div>
+      </div>
+
+      <div class="map-container-card">
+        <div id="rmc-map" class="rmc-map" role="region" aria-label="Mapa interativo mostrando Campinas, Sumaré e Hortolândia"></div>
+      </div>
+    </section>
+
     <!-- Seção de Visualização Gráfica -->
     <section class="charts-section" aria-labelledby="charts-heading">
       <div class="section-header">
@@ -333,6 +359,7 @@
   <!-- Scripts JavaScript do Aplicativo -->
   <script src="/js/accessibility.js"></script>
   <script src="/js/charts.js"></script>
+  <script src="/js/map.js"></script>
   <script src="/js/app.js"></script>
   <script src="/js/pwa.js"></script>
 </body>
