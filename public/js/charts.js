@@ -8,17 +8,16 @@
   let pollutantsChartInstance = null;
   let comparisonChartInstance = null;
 
-  // Cores adaptativas
+  // Cores limpas e elegantes para o tema padrão
   const getChartColors = () => {
-    const isDark = !document.body.classList.contains('theme-light');
     return {
-      text: isDark ? '#94a3b8' : '#475569',
-      grid: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.06)',
-      tempLine: '#38bdf8',
-      tempFill: 'rgba(56, 189, 248, 0.15)',
-      humLine: '#818cf8',
-      pm25: '#f97316',
-      pm10: '#f59e0b'
+      text: '#475569',
+      grid: '#e2e8f0',
+      tempLine: '#0284c7',
+      tempFill: 'rgba(2, 132, 199, 0.12)',
+      humLine: '#6366f1',
+      pm25: '#ea580c',
+      pm10: '#d97706'
     };
   };
 

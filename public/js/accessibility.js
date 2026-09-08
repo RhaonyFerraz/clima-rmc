@@ -1,50 +1,27 @@
 /**
  * Módulo de Acessibilidade - ClimaRMC
  * Conformidade com as diretrizes WCAG 2.1 (Nível AA)
+ * Focado em redimensionamento tipográfico e compatibilidade com leitores de tela
  */
 
 (function () {
-  const STORAGE_KEY_CONTRAST = 'clima_rmc_high_contrast';
-  const STORAGE_KEY_THEME = 'clima_rmc_theme';
   const STORAGE_KEY_FONT_SIZE = 'clima_rmc_font_size_level';
 
-  let currentFontLevel = parseInt(localStorage.getItem(STORAGE_KEY_FONT_SIZE), 10) || 0; // -1, 0, 1, 2, 3
-  const fontMultipliers = [0.875, 1.0, 1.125, 1.25, 1.4];
+  let currentFontLevel = parseInt(localStorage.getItem(STORAGE_KEY_FONT_SIZE), 10);
+  if (isNaN(currentFontLevel) || currentFontLevel < 0 || currentFontLevel > 4) {
+    currentFontLevel = 1; // Padrão 1.0rem
+  }
 
-  // Elemento para anúncios a leitores de tela
+  const fontMultipliers = [0.875, 1.0, 1.125, 1.25, 1.4];
   let liveRegion = null;
 
   function initAccessibility() {
     liveRegion = document.getElementById('a11y-live-announcer');
 
-    // 1. Aplica Alto Contraste salvo
-    const isHighContrast = localStorage.getItem(STORAGE_KEY_CONTRAST) === 'true';
-    if (isHighContrast) {
-      document.body.classList.add('high-contrast');
-      updateContrastBtnState(true);
-    }
-
-    // 2. Aplica Tema salvo (Claro / Escuro)
-    const savedTheme = localStorage.getItem(STORAGE_KEY_THEME);
-    if (savedTheme === 'light') {
-      document.body.classList.add('theme-light');
-      updateThemeBtnState('light');
-    }
-
-    // 3. Aplica Escala de Fonte salva
+    // Aplica Escala de Fonte salva
     applyFontSize(currentFontLevel);
 
-    // 4. Conecta os eventos dos botões de acessibilidade
-    const btnContrast = document.getElementById('btn-contrast');
-    if (btnContrast) {
-      btnContrast.addEventListener('click', toggleHighContrast);
-    }
-
-    const btnTheme = document.getElementById('btn-theme');
-    if (btnTheme) {
-      btnTheme.addEventListener('click', toggleTheme);
-    }
-
+    // Conecta botões de tamanho de fonte
     const btnFontInc = document.getElementById('btn-font-inc');
     if (btnFontInc) {
       btnFontInc.addEventListener('click', () => changeFontSize(1));
@@ -61,44 +38,13 @@
     }
   }
 
-  function toggleHighContrast() {
-    const isNowHighContrast = document.body.classList.toggle('high-contrast');
-    localStorage.setItem(STORAGE_KEY_CONTRAST, isNowHighContrast ? 'true' : 'false');
-    updateContrastBtnState(isNowHighContrast);
-    announceToScreenReader(isNowHighContrast ? 'Modo de alto contraste ativado.' : 'Modo de alto contraste desativado.');
-  }
-
-  function updateContrastBtnState(active) {
-    const btn = document.getElementById('btn-contrast');
-    if (btn) {
-      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
-      btn.innerHTML = active ? '☀️ Contraste Normal' : '👁️ Alto Contraste';
-    }
-  }
-
-  function toggleTheme() {
-    const isLight = document.body.classList.toggle('theme-light');
-    const theme = isLight ? 'light' : 'dark';
-    localStorage.setItem(STORAGE_KEY_THEME, theme);
-    updateThemeBtnState(theme);
-    announceToScreenReader(`Tema alternado para modo ${isLight ? 'claro' : 'escuro'}.`);
-  }
-
-  function updateThemeBtnState(theme) {
-    const btn = document.getElementById('btn-theme');
-    if (btn) {
-      btn.innerHTML = theme === 'light' ? '🌙 Modo Escuro' : '☀️ Modo Claro';
-      btn.setAttribute('aria-label', `Mudar para tema ${theme === 'light' ? 'escuro' : 'claro'}`);
-    }
-  }
-
   function changeFontSize(delta) {
-    const newLevel = Math.max(0, Math.min(fontMultipliers.length - 1, currentFontLevel + 1 * delta));
+    const newLevel = Math.max(0, Math.min(fontMultipliers.length - 1, currentFontLevel + delta));
     if (newLevel !== currentFontLevel) {
       currentFontLevel = newLevel;
       localStorage.setItem(STORAGE_KEY_FONT_SIZE, currentFontLevel);
       applyFontSize(currentFontLevel);
-      announceToScreenReader(`Tamanho de texto alterado.`);
+      announceToScreenReader('Tamanho de texto ajustado.');
     }
   }
 
