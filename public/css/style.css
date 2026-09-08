@@ -102,7 +102,7 @@ body {
 }
 
 .header-container {
-  max-width: 1300px;
+  max-width: 1440px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -204,9 +204,9 @@ body {
 
 /* Container de Conteúdo */
 .content-wrapper {
-  max-width: 1300px;
-  margin: 28px auto;
-  padding: 0 24px 60px;
+  max-width: 1440px;
+  margin: 24px auto;
+  padding: 0 clamp(16px, 3vw, 36px) 60px;
 }
 
 /* Banner de Alertas Ativos */
@@ -262,7 +262,7 @@ body {
 /* Grade dos Cards Principais */
 .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
   gap: 24px;
   margin-bottom: 32px;
 }
@@ -941,40 +941,14 @@ body {
   font-weight: 600;
 }
 
-/* Responsividade Mobile */
-@media (max-width: 768px) {
-  .header-container {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  
-  .city-selector {
-    justify-content: center;
-  }
-  
-  .city-tab {
-    flex: 1;
-    text-align: center;
-    padding: 8px 12px;
-  }
-  
-  .hist-stats-row {
-    grid-template-columns: 1fr 1fr;
-  }
 
-  .hist-charts-grid {
-    grid-template-columns: 1fr;
-  }
-}
 
 /* ==========================================================================
    Dashboard Histórico SQLite
    ========================================================================== */
 
 .history-section {
-  padding: 0 clamp(12px, 3vw, 32px) 32px;
-  max-width: 1400px;
-  margin: 0 auto;
+  margin-bottom: 40px;
 }
 
 /* Seletor de Período */
@@ -1276,14 +1250,272 @@ body {
   color: var(--text-primary);
 }
 
+/* ==========================================================================
+   Responsividade Completa: Telas Grandes (Desktop/2K/4K) e Mobile (Celular/Tablet)
+   ========================================================================== */
+
+/* 1. Telas Grandes (Monitores Widescreen, 1440px, 1600px+) */
+@media (min-width: 1440px) {
+  .header-container,
+  .content-wrapper {
+    max-width: 1540px;
+  }
+  
+  .dashboard-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+
+  .forecast-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+  }
+
+  .hist-stats-row {
+    gap: 16px;
+  }
+
+  .charts-grid {
+    gap: 28px;
+  }
+
+  .metric-card,
+  .chart-card,
+  .analysis-section {
+    padding: 28px;
+  }
+}
+
+/* 2. Tablets e Laptops Médios (1024px e abaixo) */
+@media (max-width: 1024px) {
+  .header-container {
+    gap: 12px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 18px;
+  }
+
+  .forecast-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  .hist-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 3. Dispositivos Móveis e Celulares (768px e abaixo) */
 @media (max-width: 768px) {
+  .main-header {
+    padding: 14px 16px;
+  }
+
+  .header-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .brand {
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .brand-title {
+    font-size: 1.15rem;
+    line-height: 1.25;
+    text-align: center;
+  }
+
+  .brand-subtitle {
+    font-size: 0.75rem;
+    text-align: center;
+  }
+
+  .city-selector {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 4px;
+    padding: 4px;
+  }
+
+  .city-tab {
+    flex: 1;
+    text-align: center;
+    padding: 9px 8px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .content-wrapper {
+    margin: 16px auto;
+    padding: 0 14px 48px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .metric-card {
+    padding: 18px 16px;
+  }
+
+  .weather-temp-group .temp-large {
+    font-size: 2.8rem;
+  }
+
   .uv-widget {
     flex-direction: column;
+    align-items: flex-start;
     gap: 10px;
   }
+
   .wind-compass-widget {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 14px;
+  }
+
+  .wind-info-list {
+    width: 100%;
+  }
+
+  .forecast-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .forecast-card {
+    padding: 14px 10px;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .map-legend {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 8px;
+    font-size: 0.75rem;
+  }
+
+  .rmc-map {
+    height: 320px;
+  }
+
+  .hist-period-selector {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+  }
+
+  .hist-period-btn {
+    flex: 1;
+    text-align: center;
+    padding: 8px 10px;
+    font-size: 0.78rem;
+  }
+
+  .hist-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .hist-stat-card {
+    padding: 12px 14px;
+  }
+
+  .hist-stat-value {
+    font-size: 1.35rem;
+  }
+
+  .hist-charts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-card {
+    padding: 16px 14px;
+    min-height: 280px;
+  }
+
+  .chart-wrapper {
+    height: 230px;
+  }
+
+  .analysis-section {
+    padding: 18px 14px;
+  }
+
+  .export-actions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .btn-export {
+    width: 100%;
+    justify-content: center;
+    padding: 10px;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 14px;
+  }
+}
+
+/* 4. Celulares Pequenos (480px e abaixo) */
+@media (max-width: 480px) {
+  .brand-title {
+    font-size: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .city-tab {
+    font-size: 0.78rem;
+    padding: 8px 4px;
+  }
+
+  .weather-temp-group .temp-large {
+    font-size: 2.4rem;
+  }
+
+  .pollutants-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+
+  .forecast-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .forecast-card {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 12px 16px;
+  }
+
+  .forecast-temp-range {
+    margin: 0;
+  }
+
+  .hist-stats-row {
+    grid-template-columns: 1fr;
   }
 }

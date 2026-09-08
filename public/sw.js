@@ -3,7 +3,7 @@
  * Suporte offline, cache inteligente e alta disponibilidade
  */
 
-const CACHE_NAME = 'clima-rmc-cache-v3';
+const CACHE_NAME = 'clima-rmc-cache-v4';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
