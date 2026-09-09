@@ -180,8 +180,10 @@ const DynamicWeather = (function () {
     const icon = weather.icon || '🌤️';
     const temp = weather.temperature;
 
-    // 1. Atualiza Favicon dinamicamente
-    updateFavicon(weatherCode, icon);
+    // 1. Atualiza Favicon dinamicamente SOMENTE apos a tela de abertura terminar (3.5s)
+    setTimeout(() => {
+      updateFavicon(weatherCode, icon);
+    }, 3500);
 
     // 2. Atualiza Badge do PWA (temperatura no ícone do celular/desktop)
     if (temp !== undefined && temp !== null) {
