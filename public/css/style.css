@@ -76,7 +76,97 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* ================================================================
+   Splash Screen — Tela de Boas-Vindas (3 segundos)
+   ================================================================ */
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #0c1a2e 0%, #0a3060 50%, #0284c7 100%);
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.splash-screen.splash-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.splash-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+  padding: 40px 32px;
+  animation: splashFadeIn 0.7s ease forwards;
+}
+
+@keyframes splashFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.splash-icon {
+  font-size: 4rem;
+  line-height: 1;
+  filter: drop-shadow(0 4px 24px rgba(2, 132, 199, 0.5));
+  animation: splashFloat 2s ease-in-out infinite;
+}
+
+@keyframes splashFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+.splash-title {
+  font-family: var(--font-base);
+  font-size: clamp(1.15rem, 3vw, 1.6rem);
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  max-width: 420px;
+}
+
+.splash-subtitle {
+  font-family: var(--font-base);
+  font-size: clamp(0.85rem, 2.2vw, 1.05rem);
+  font-weight: 500;
+  color: rgba(186, 230, 253, 0.9);
+  letter-spacing: 0.02em;
+}
+
+/* Barra de progresso animada */
+.splash-bar {
+  width: 220px;
+  height: 4px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.splash-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #38bdf8, #7dd3fc);
+  border-radius: 99px;
+  animation: splashProgress 3s linear forwards;
+}
+
+@keyframes splashProgress {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
 /* Link de Salto para Acessibilidade */
+
 .skip-link {
   position: absolute;
   top: -100px;

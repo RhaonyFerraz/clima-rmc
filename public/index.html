@@ -32,6 +32,16 @@
 </head>
 <body>
 
+  <!-- Splash Screen - Tela Inicial (3 segundos) -->
+  <div id="splash-screen" class="splash-screen" role="status" aria-label="Carregando aplicativo">
+    <div class="splash-content">
+      <div class="splash-icon" aria-hidden="true">🌦️</div>
+      <p class="splash-title">Projeto Integrador em Computação II</p>
+      <p class="splash-subtitle">DRP04 — Turma 005 / UNIVESP</p>
+      <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+    </div>
+  </div>
+
   <!-- Link de Salto para Acessibilidade (WCAG 2.1) -->
   <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
 
@@ -508,5 +518,20 @@
   <script src="/js/history.js?v=8"></script>
   <script src="/js/app.js?v=8"></script>
   <script src="/js/pwa.js?v=8"></script>
+
+  <!-- Splash Screen: fecha após 3 segundos com fade-out suave -->
+  <script>
+    (function () {
+      var splash = document.getElementById('splash-screen');
+      if (!splash) return;
+      setTimeout(function () {
+        splash.classList.add('splash-hidden');
+        // Remove do DOM após o fade terminar (0.6s)
+        setTimeout(function () {
+          splash.remove();
+        }, 650);
+      }, 3000);
+    })();
+  </script>
 </body>
 </html>
