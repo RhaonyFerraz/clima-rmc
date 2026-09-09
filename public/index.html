@@ -26,7 +26,7 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <!-- Estilos Customizados -->
-  <link rel="stylesheet" href="/css/style.css?v=12">
+  <link rel="stylesheet" href="/css/style.css?v=13">
 
   <!-- Chart.js para visualização de dados -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
@@ -451,6 +451,9 @@
       <div class="section-header">
         <h2 id="analysis-heading" class="section-title">Análise Estatística de Dados & Relatórios</h2>
         <div class="export-actions">
+          <button id="btn-export-pdf" class="btn-export btn-export-pdf" aria-label="Gerar relatório técnico acadêmico em PDF formatado para a UNIVESP">
+            📄 Relatório Técnico PDF
+          </button>
           <button id="btn-export-csv" class="btn-export" aria-label="Baixar relatório completo em formato CSV">
             📥 Exportar CSV
           </button>
@@ -517,13 +520,14 @@
   </footer>
 
   <!-- Scripts JavaScript do Aplicativo -->
-  <script src="/js/accessibility.js?v=12"></script>
-  <script src="/js/charts.js?v=12"></script>
-  <script src="/js/map.js?v=12"></script>
-  <script src="/js/history.js?v=12"></script>
-  <script src="/js/dynamicWeather.js?v=12"></script>
-  <script src="/js/app.js?v=12"></script>
-  <script src="/js/pwa.js?v=12"></script>
+  <script src="/js/accessibility.js?v=13"></script>
+  <script src="/js/charts.js?v=13"></script>
+  <script src="/js/map.js?v=13"></script>
+  <script src="/js/history.js?v=13"></script>
+  <script src="/js/dynamicWeather.js?v=13"></script>
+  <script src="/js/reportPdf.js?v=13"></script>
+  <script src="/js/app.js?v=13"></script>
+  <script src="/js/pwa.js?v=13"></script>
 
   <!-- Splash Screen: fecha após 3 segundos com fade-out suave -->
   <script>

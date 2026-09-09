@@ -77,8 +77,18 @@
    * Configura links de exportação com base na cidade selecionada
    */
   function setupExportButtons() {
+    const pdfBtn = document.getElementById('btn-export-pdf');
     const csvBtn = document.getElementById('btn-export-csv');
     const jsonBtn = document.getElementById('btn-export-json');
+
+    if (pdfBtn) {
+      pdfBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (window.ReportPdf) {
+          window.ReportPdf.generateTechnicalReport(currentCityId);
+        }
+      });
+    }
 
     if (csvBtn) {
       csvBtn.addEventListener('click', (e) => {

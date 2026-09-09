@@ -1712,3 +1712,51 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* ================================================================
+   Ações de Exportação e Relatório Técnico Acadêmico (PDF, CSV, JSON)
+   ================================================================ */
+.export-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn-export {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+}
+
+.btn-export:hover, .btn-export:focus-visible {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  background: #f8fafc;
+  transform: translateY(-1px);
+}
+
+.btn-export-pdf {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: #ffffff;
+  border-color: #0284c7;
+  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.25);
+}
+
+.btn-export-pdf:hover, .btn-export-pdf:focus-visible {
+  background: linear-gradient(135deg, #0369a1 0%, #0c4a6e 100%);
+  color: #ffffff;
+  border-color: #0369a1;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35);
+}
+
