@@ -6,11 +6,16 @@
 (function () {
   let currentCityId = 'campinas';
   let allCitiesCache = [];
+  let campinasDataCache = null;
 
   async function initApp() {
     setupCityTabs();
     setupSyncButton();
     setupExportButtons();
+
+    if (window.DynamicWeather) {
+      window.DynamicWeather.setupNotificationButton(() => campinasDataCache);
+    }
 
     // Carrega dados iniciais
     await loadAllCitiesSummary();
@@ -125,6 +130,12 @@
       const json = await res.json();
 
       if (json.success && json.data) {
+        if (cityId === 'campinas') {
+          campinasDataCache = json.data;
+          if (window.DynamicWeather) {
+            window.DynamicWeather.updateFromCampinas(json.data);
+          }
+        }
         renderCityDashboard(json.data);
 
         // Atualiza o Dashboard Histórico para a cidade selecionada

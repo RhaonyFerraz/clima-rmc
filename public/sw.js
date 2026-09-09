@@ -3,7 +3,7 @@
  * Suporte offline, cache inteligente e alta disponibilidade
  */
 
-const CACHE_NAME = 'clima-rmc-cache-v9';
+const CACHE_NAME = 'clima-rmc-cache-v10';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -12,6 +12,7 @@ const STATIC_ASSETS = [
   '/js/charts.js',
   '/js/history.js',
   '/js/map.js',
+  '/js/dynamicWeather.js',
   '/js/accessibility.js',
   '/js/pwa.js',
   '/manifest.json',

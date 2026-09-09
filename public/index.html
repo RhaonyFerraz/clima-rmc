@@ -13,6 +13,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="ClimaRMC">
+  <link id="dynamic-favicon" rel="icon" type="image/svg+xml" href="/icons/icon.svg">
   <link rel="apple-touch-icon" href="/icons/icon.svg">
 
   <!-- Google Fonts: Inter -->
@@ -25,7 +26,7 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <!-- Estilos Customizados -->
-  <link rel="stylesheet" href="/css/style.css?v=9">
+  <link rel="stylesheet" href="/css/style.css?v=10">
 
   <!-- Chart.js para visualização de dados -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
@@ -70,6 +71,11 @@
       </nav>
 
       <div style="display: flex; gap: 8px; align-items: center;">
+        <!-- Botão de Notificações / Alertas Climáticos -->
+        <button id="btn-weather-alerts" class="notify-btn" aria-label="Ativar notificações de alertas climáticos de Campinas">
+          <span>🔔 Alertas</span>
+        </button>
+
         <!-- Botão de Instalação do Aplicativo (PWA) -->
         <button id="btn-pwa-install" class="pwa-install-btn" style="display: none;" aria-label="Instalar aplicativo ClimaRMC no seu celular ou computador">
           <span>Instalar</span>
@@ -511,12 +517,13 @@
   </footer>
 
   <!-- Scripts JavaScript do Aplicativo -->
-  <script src="/js/accessibility.js?v=9"></script>
-  <script src="/js/charts.js?v=9"></script>
-  <script src="/js/map.js?v=9"></script>
-  <script src="/js/history.js?v=9"></script>
-  <script src="/js/app.js?v=9"></script>
-  <script src="/js/pwa.js?v=9"></script>
+  <script src="/js/accessibility.js?v=10"></script>
+  <script src="/js/charts.js?v=10"></script>
+  <script src="/js/map.js?v=10"></script>
+  <script src="/js/history.js?v=10"></script>
+  <script src="/js/dynamicWeather.js?v=10"></script>
+  <script src="/js/app.js?v=10"></script>
+  <script src="/js/pwa.js?v=10"></script>
 
   <!-- Splash Screen: fecha após 3 segundos com fade-out suave -->
   <script>

@@ -295,6 +295,32 @@ body {
   animation: spin 1s linear infinite;
 }
 
+.notify-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.notify-btn:hover, .notify-btn:focus-visible {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  background: #f8fafc;
+}
+
+.notify-btn.alerts-active {
+  border-color: #10b981;
+  color: #059669;
+  background: rgba(16, 185, 129, 0.1);
+}
+
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
